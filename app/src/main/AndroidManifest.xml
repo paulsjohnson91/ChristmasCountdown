@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="christmas.peej.com.christmascountdown">
-
+    <uses-feature android:name="android.software.live_wallpaper" />
     <application
         android:allowBackup="true"
         android:icon="@mipmap/santa"
@@ -9,6 +9,18 @@
         android:roundIcon="@mipmap/santa"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <service
+            android:name=".CountdownWallpaper"
+            android:label="Xmas Countdown"
+            android:permission="android.permission.BIND_WALLPAPER" >
+            <intent-filter>
+                <action android:name="android.service.wallpaper.WallpaperService" />
+            </intent-filter>
+
+            <meta-data
+                android:name="android.service.wallpaper"
+                android:resource="@xml/cube" />
+        </service>
         <activity
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
@@ -20,6 +32,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+
     </application>
 
 </manifest>
