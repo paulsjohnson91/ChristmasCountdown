@@ -1,6 +1,9 @@
 package christmas.peej.com.christmascountdown;
 
 import android.annotation.SuppressLint;
+import android.app.WallpaperManager;
+import android.content.ComponentName;
+import android.content.Intent;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
@@ -128,6 +131,12 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
                 tv_countdown.setText("Merry Christmas!");
             }
         }.start();
+    }
+
+    public void setWallpaper(View view){
+        Intent intent = new Intent(WallpaperManager.ACTION_CHANGE_LIVE_WALLPAPER);
+        intent.putExtra(WallpaperManager.EXTRA_LIVE_WALLPAPER_COMPONENT, new ComponentName(this, CountdownWallpaper.class));
+        startActivity(intent);
     }
 
 
@@ -285,8 +294,6 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
         super.onPause();
         sensorManager.unregisterListener(this);
     }
-
-
 
 
 }

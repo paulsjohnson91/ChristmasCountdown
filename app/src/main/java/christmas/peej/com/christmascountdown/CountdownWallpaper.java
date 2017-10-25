@@ -21,8 +21,12 @@ import android.util.Log;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 
+import org.joda.time.DateTime;
 import org.joda.time.Days;
+import org.joda.time.Hours;
 import org.joda.time.LocalDateTime;
+import org.joda.time.Minutes;
+import org.joda.time.Seconds;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -45,6 +49,7 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
     private int currentToGoStat = 0;
     private long lastUpdate;
     private SensorManager sensorManager;
+    private int counterValue = 0;
 
     @Override
     public void onCreate() {
@@ -170,10 +175,19 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
          */
         @Override
         public void onTouchEvent(MotionEvent event) {
+//            Log.d("HERE","" + event.getAction());
+//            Log.d("HERE","" + event.getActionMasked());
             if (event.getAction() == MotionEvent.ACTION_MOVE) {
                 mTouchX = event.getX();
                 mTouchY = event.getY();
-            } else {
+                counterValue = (counterValue+1)%4;
+            }
+//            else if(event.getAction()==MotionEvent.ACTION_BUTTON_PRESS){
+//                Log.d("HERE","TOUCH");
+//                mTouchX = -1;
+//                mTouchY = -1;
+//            }
+            else {
                 mTouchX = -1;
                 mTouchY = -1;
             }
@@ -204,9 +218,30 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
                     //drawCube(c);
                     Rect bounds = new Rect();
                     LocalDateTime fromDate1 = new LocalDateTime(System.currentTimeMillis());
-                    LocalDateTime newYear1 = new LocalDateTime(2017,12,25,0,0);
+                    LocalDateTime newYear1 = new LocalDateTime(Integer.parseInt(DateTime.now().year().getAsString()),12,25,0,0);
                     String formatted1 = "" + Days.daysBetween(fromDate1, newYear1);
                     String daysLeft = formatted1.substring(1,formatted1.length()-1) + " days";
+                    String hoursLeft = Hours.hoursBetween(fromDate1, newYear1).getHours() + " hours";
+                    String minutesLeft = Minutes.minutesBetween(fromDate1, newYear1).getMinutes() + " minutes";
+                    String secondsLeft = Seconds.secondsBetween(fromDate1, newYear1).getSeconds() + " seconds";
+                    String output = "";
+                    switch (counterValue){
+                        case 0:
+                            output = daysLeft;
+                            break;
+                        case 1:
+                            output = hoursLeft;
+                            break;
+                        case 2:
+                            output = minutesLeft;
+                            break;
+                        case 3:
+                            output = secondsLeft;
+                            break;
+                        default:
+                            output = daysLeft;
+                            break;
+                    }
                     Paint paint = new Paint(Paint.ANTI_ALIAS_FLAG);
                     // text color - #3D3D3D
                     // text size in pixels
@@ -216,13 +251,16 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
                     int mScreenWidth = displayMetrics.widthPixels;
                     int mSreenHeight = displayMetrics.heightPixels;
                     paint.setTextSize(displayMetrics.density*40);
-                    paint.setTypeface(Typeface.create("MONOSPACE", Typeface.NORMAL));
+                    paint.setTextAlign(Paint.Align.CENTER);
+                    Typeface tf =Typeface.createFromAsset(getAssets(),"fonts/ComingSoon-Regular.ttf");
+                    paint.setTypeface(Typeface.create(tf,Typeface.BOLD));
+                    //paint.setTypeface(Typeface.create("MONOSPACE", Typeface.NORMAL));
                     paint.setColor(Color.WHITE);
                     paint.getTextBounds(daysLeft, 0, daysLeft.length(), bounds);
-                    int x = (backgroundImage.getWidth() - bounds.width())/2;
-                    int y = 9*(backgroundImage.getHeight() + bounds.height())/10;
+                    int x = (c.getWidth() / 2);
+                    int y = 4*(c.getHeight())/5;
 
-                    c.drawText(daysLeft, x, y, paint);
+                    c.drawText(output, x, y, paint);
                     if(firstParticles) {
                         for (SnowFlake snowFlake : snowflakes) {
                             snowFlake.draw(c, mSreenHeight);
