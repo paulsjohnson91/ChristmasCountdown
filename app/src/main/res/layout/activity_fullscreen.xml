@@ -49,12 +49,23 @@
 
         </LinearLayout>
     </FrameLayout>
-
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Wallaper"
-        android:onClick="setWallpaper" />
+    <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <Button
+            android:id="@+id/setWallpaperButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Set Wallaper"
+            android:onClick="setWallpaper" />
+        <Button
+            android:id="@+id/factOfTheDayButton"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Fact Of the Day"
+            android:onClick="seeFact" />
+    </RelativeLayout>
 
 </FrameLayout>

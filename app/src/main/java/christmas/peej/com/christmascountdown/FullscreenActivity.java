@@ -139,6 +139,12 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
         startActivity(intent);
     }
 
+    public void seeFact(View view){
+        Intent intent = new Intent(this, TransparentFact.class);
+        startActivity(intent);
+        //Toast.makeText(this,"Test",Toast.LENGTH_SHORT).show();
+    }
+
 
     @Override
     public boolean onTouchEvent(MotionEvent event){
