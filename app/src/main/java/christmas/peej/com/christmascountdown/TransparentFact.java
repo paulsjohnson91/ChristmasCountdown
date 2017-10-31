@@ -22,6 +22,9 @@ public class TransparentFact extends AppCompatActivity {
                         | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
                         | View.SYSTEM_UI_FLAG_FULLSCREEN
                         | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY);
+
+
+
         setContentView(R.layout.activity_transparent_fact);
         TextView tv = (TextView) findViewById(R.id.factOfTheDay);
         LocalDateTime fromDate1 = new LocalDateTime(System.currentTimeMillis());

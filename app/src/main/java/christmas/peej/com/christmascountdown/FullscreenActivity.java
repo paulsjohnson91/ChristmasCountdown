@@ -124,6 +124,7 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
                         break;
                 }
                 tv_countdown.setText(output);
+                ((TextView)findViewById(R.id.toGoText)).setText("To Go!");
             }
 
             @Override
@@ -146,72 +147,72 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
     }
 
 
-    @Override
-    public boolean onTouchEvent(MotionEvent event){
-        //Log.d("Motion", "event");
-//        Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT)
-//                .show();
-        int action = MotionEventCompat.getActionMasked(event);
-        String DEBUG_TAG = "swipeevent";
-        switch(action) {
-            case (MotionEvent.ACTION_DOWN) :
-                x1 = event.getX();
-                //Log.d(DEBUG_TAG,"Action was DOWN");
-                return true;
-            case (MotionEvent.ACTION_MOVE) :
-                //Log.d(DEBUG_TAG,"Action was MOVE");
-                return true;
-            case (MotionEvent.ACTION_UP) :
-                x2 = event.getX();
-                float deltaX = x2 - x1;
-                if (Math.abs(deltaX) > MIN_DISTANCE)
-                {
-                    if(deltaX>0){
-                        currentToGoStat ++;
-                    }
-                    else{
-                        currentToGoStat --;
-                    }
-                    String output = "";
-                    switch (Math.abs(currentToGoStat)%4){
-                        case 0:
-                            output = daysLeft;
-                            break;
-                        case 1:
-                            output = hoursLeft;
-                            break;
-                        case 2:
-                            output = minutesLeft;
-                            break;
-                        case 3:
-                            output = secondsLeft;
-                            break;
-                        default:
-                            output = daysLeft;
-                            break;
-                    }
-                    final TextView tv_countdown = (TextView) findViewById(R.id.fullscreen_content);
-                    tv_countdown.setText(output);
-
-                }
-                else
-                {
-                    // consider as something else - a screen tap for example
-                }
-                //Log.d(DEBUG_TAG,"Action was UP");
-                return true;
-            case (MotionEvent.ACTION_CANCEL) :
-                //Log.d(DEBUG_TAG,"Action was CANCEL");
-                return true;
-
-            case (MotionEvent.ACTION_OUTSIDE) :
-                //Log.d(DEBUG_TAG,"Movement occurred outside bounds " +
-                  //      "of current screen element");
-                return true;
-            default :
-                return super.onTouchEvent(event);
-        }
-    }
+//    @Override
+//    public boolean onTouchEvent(MotionEvent event){
+//        //Log.d("Motion", "event");
+////        Toast.makeText(this, "Device was shuffed", Toast.LENGTH_SHORT)
+////                .show();
+//        int action = MotionEventCompat.getActionMasked(event);
+//        String DEBUG_TAG = "swipeevent";
+//        switch(action) {
+//            case (MotionEvent.ACTION_DOWN) :
+//                x1 = event.getX();
+//                //Log.d(DEBUG_TAG,"Action was DOWN");
+//                return true;
+//            case (MotionEvent.ACTION_MOVE) :
+//                //Log.d(DEBUG_TAG,"Action was MOVE");
+//                return true;
+//            case (MotionEvent.ACTION_UP) :
+//                x2 = event.getX();
+//                float deltaX = x2 - x1;
+//                if (Math.abs(deltaX) > MIN_DISTANCE)
+//                {
+//                    if(deltaX>0){
+//                        currentToGoStat ++;
+//                    }
+//                    else{
+//                        currentToGoStat --;
+//                    }
+//                    String output = "";
+//                    switch (Math.abs(currentToGoStat)%4){
+//                        case 0:
+//                            output = daysLeft;
+//                            break;
+//                        case 1:
+//                            output = hoursLeft;
+//                            break;
+//                        case 2:
+//                            output = minutesLeft;
+//                            break;
+//                        case 3:
+//                            output = secondsLeft;
+//                            break;
+//                        default:
+//                            output = daysLeft;
+//                            break;
+//                    }
+//                    final TextView tv_countdown = (TextView) findViewById(R.id.fullscreen_content);
+//                    tv_countdown.setText(output);
+//
+//                }
+//                else
+//                {
+//                    // consider as something else - a screen tap for example
+//                }
+//                //Log.d(DEBUG_TAG,"Action was UP");
+//                return true;
+//            case (MotionEvent.ACTION_CANCEL) :
+//                //Log.d(DEBUG_TAG,"Action was CANCEL");
+//                return true;
+//
+//            case (MotionEvent.ACTION_OUTSIDE) :
+//                //Log.d(DEBUG_TAG,"Movement occurred outside bounds " +
+//                  //      "of current screen element");
+//                return true;
+//            default :
+//                return super.onTouchEvent(event);
+//        }
+//    }
 
 
 
@@ -299,6 +300,30 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
         // unregister listener
         super.onPause();
         sensorManager.unregisterListener(this);
+    }
+
+    public void changeTimeType(View view){
+        String output = "";
+        currentToGoStat++;
+        switch (Math.abs(currentToGoStat)%4){
+            case 0:
+                output = daysLeft;
+                break;
+            case 1:
+                output = hoursLeft;
+                break;
+            case 2:
+                output = minutesLeft;
+                break;
+            case 3:
+                output = secondsLeft;
+                break;
+            default:
+                output = daysLeft;
+                break;
+        }
+        final TextView tv_countdown = (TextView) findViewById(R.id.fullscreen_content);
+        tv_countdown.setText(output);
     }
 
 

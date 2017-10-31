@@ -37,7 +37,12 @@
         </activity>
         <activity
             android:name=".TransparentFact"
-            android:theme="@style/Theme.AppCompat.Translucent"></activity>
+            android:theme="@style/Theme.AppCompat.Translucent" />
+        <activity
+            android:name=".NoActionBar"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_no_action_bar"
+            android:theme="@style/FullscreenTheme"></activity>
     </application>
 
 </manifest>
