@@ -16,10 +16,14 @@ import android.hardware.SensorManager;
 import android.os.Handler;
 import android.os.SystemClock;
 import android.service.wallpaper.WallpaperService;
+import android.support.constraint.ConstraintLayout;
 import android.util.DisplayMetrics;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.SurfaceHolder;
+import android.view.View;
+import android.widget.LinearLayout;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -267,8 +271,14 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
                         }
                     }
 
-
-
+//                    c.drawColor(Color.BLACK);
+////                    View view = (View) findViewByID
+//                    LayoutInflater inflater = (LayoutInflater)getApplicationContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+//                    ConstraintLayout layout = (ConstraintLayout) inflater.inflate(R.layout.activity_fullscreen, null);
+//                    layout.measure(c.getWidth(),c.getHeight());
+//                    layout.layout(0, 0, c.getWidth(), c.getHeight());
+//
+//                    layout.draw(c);
                     drawTouchPoint(c);
                 }
             } finally {

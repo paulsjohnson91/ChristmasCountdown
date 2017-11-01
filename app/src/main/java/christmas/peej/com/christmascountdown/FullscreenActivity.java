@@ -9,7 +9,11 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
+import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.MotionEventCompat;
+import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -26,6 +30,7 @@ import android.widget.Toast;
 
 import com.plattysoft.leonids.ParticleSystem;
 
+import org.joda.time.DateTime;
 import org.joda.time.Days;
 import org.joda.time.Hours;
 import org.joda.time.LocalDate;
@@ -80,7 +85,7 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
 
 
     public void countdown(){
-        LocalDate fromDate = new LocalDate(System.currentTimeMillis());
+        final LocalDate fromDate = new LocalDate(System.currentTimeMillis());
         LocalDate newYear = new LocalDate(2017,12,25);
         String formatted = "" + Days.daysBetween(fromDate, newYear);
 
@@ -98,33 +103,108 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
             @Override
             public void onTick(long millis) {
                 LocalDateTime fromDate1 = new LocalDateTime(System.currentTimeMillis());
-                LocalDateTime newYear1 = new LocalDateTime(2017,12,25,0,0);
-                String formatted1 = "" + Days.daysBetween(fromDate1, newYear1);
+                LocalDateTime newYear1 = new LocalDateTime(Integer.parseInt(DateTime.now().year().getAsString()),12,25,0,0);
+                int daysDaysLeft = Days.daysBetween(fromDate1, newYear1).getDays();
+                int daysHoursLeft = Hours.hoursBetween(fromDate1, newYear1).getHours()%24;
+                int daysMinutesLeft  = Minutes.minutesBetween(fromDate1, newYear1).getMinutes()%60;
+                int daysSecondsLeft = Seconds.secondsBetween(fromDate1,newYear1).getSeconds()%60;
                 String output = "";
-                daysLeft = formatted1.substring(1,formatted1.length()-1) + " days";
+
+
+                daysLeft = daysDaysLeft + " days";
+                String daysHoursMinutes = "";
+                String daysSeconds = "";
+                if(daysHoursLeft==1){
+                    daysHoursMinutes += daysHoursLeft + " hour, ";
+                }
+                else{
+                    daysHoursMinutes += daysHoursLeft + " hours, ";
+                }
+                if(daysMinutesLeft==1){
+                    daysHoursMinutes += daysMinutesLeft + " minute";
+                }
+                else{
+                    daysHoursMinutes += daysMinutesLeft + " minutes";
+                }
+                if(daysSecondsLeft ==1){
+                    daysSeconds += daysSecondsLeft + " second";
+                }
+                else{
+                    daysSeconds += daysSecondsLeft + " seconds";
+                }
+
                 hoursLeft = Hours.hoursBetween(fromDate1, newYear1).getHours() + " hours";
+
                 minutesLeft = Minutes.minutesBetween(fromDate1, newYear1).getMinutes() + " minutes";
                 secondsLeft = Seconds.secondsBetween(fromDate1, newYear1).getSeconds() + " seconds";
                 switch (Math.abs(currentToGoStat)%4){
                     case 0:
-                        output = daysLeft;
+                        if(daysHoursLeft==1){
+                            daysHoursMinutes = daysHoursLeft + " hour, ";
+                        }
+                        else{
+                            daysHoursMinutes = daysHoursLeft + " hours, ";
+                        }
+                        if(daysMinutesLeft==1){
+                            daysHoursMinutes += daysMinutesLeft + " minute";
+                        }
+                        else{
+                            daysHoursMinutes += daysMinutesLeft + " minutes";
+                        }
+                        if(daysSecondsLeft ==1){
+                            daysSeconds = daysSecondsLeft + " second";
+                        }
+                        else{
+                            daysSeconds = daysSecondsLeft + " seconds";
+                        }
+                        tv_countdown.setText(daysLeft);
+                        ((TextView)findViewById(R.id.hoursMinutesText)).setText(daysHoursMinutes);
+                        ((TextView)findViewById(R.id.secondsText)).setText(daysSeconds);
                         break;
                     case 1:
-                        output = hoursLeft;
+                        if(daysMinutesLeft==1){
+                            daysHoursMinutes = daysMinutesLeft + " minute";
+                        }
+                        else{
+                            daysHoursMinutes = daysMinutesLeft + " minutes";
+                        }
+                        if(daysSecondsLeft ==1){
+                            daysSeconds = daysSecondsLeft + " second";
+                        }
+                        else{
+                            daysSeconds = daysSecondsLeft + " seconds";
+                        }
+                        tv_countdown.setText(hoursLeft);
+                        ((TextView)findViewById(R.id.hoursMinutesText)).setText(daysHoursMinutes);
+                        ((TextView)findViewById(R.id.secondsText)).setText(daysSeconds);
                         break;
                     case 2:
-                        output = minutesLeft;
+                        if(daysSecondsLeft ==1){
+                            daysHoursMinutes = daysSecondsLeft + " second";
+                        }
+                        else{
+                            daysHoursMinutes = daysSecondsLeft + " seconds";
+                        }
+                        daysSeconds = "";
+                        tv_countdown.setText(minutesLeft);
+                        ((TextView)findViewById(R.id.hoursMinutesText)).setText(daysHoursMinutes);
+                        ((TextView)findViewById(R.id.secondsText)).setText(daysSeconds);
                         break;
                     case 3:
-                        output = secondsLeft;
+                        daysSeconds = "";
+                        daysHoursMinutes = "";
+                        tv_countdown.setText(secondsLeft);
+                        ((TextView)findViewById(R.id.hoursMinutesText)).setText(daysHoursMinutes);
+                        ((TextView)findViewById(R.id.secondsText)).setText(daysSeconds);
                         //output = newYear1.
                         break;
                     default:
                         output = daysLeft;
                         break;
                 }
-                tv_countdown.setText(output);
-                ((TextView)findViewById(R.id.toGoText)).setText("To Go!");
+
+                //tv_countdown.setText(output);
+                //((TextView)findViewById(R.id.toGoText)).setText("To Go!");
             }
 
             @Override
@@ -303,28 +383,9 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
     }
 
     public void changeTimeType(View view){
-        String output = "";
         currentToGoStat++;
-        switch (Math.abs(currentToGoStat)%4){
-            case 0:
-                output = daysLeft;
-                break;
-            case 1:
-                output = hoursLeft;
-                break;
-            case 2:
-                output = minutesLeft;
-                break;
-            case 3:
-                output = secondsLeft;
-                break;
-            default:
-                output = daysLeft;
-                break;
-        }
-        final TextView tv_countdown = (TextView) findViewById(R.id.fullscreen_content);
-        tv_countdown.setText(output);
     }
+
 
 
 }

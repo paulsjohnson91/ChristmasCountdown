@@ -7,13 +7,14 @@
     <application
         android:allowBackup="true"
         android:icon="@mipmap/santa"
-        android:label="Christmas Countdown"
+        android:label="Xmas Countdown"
         android:roundIcon="@mipmap/santa"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <service
             android:name=".CountdownWallpaper"
             android:label="Xmas Countdown"
+            android:screenOrientation="portrait"
             android:permission="android.permission.BIND_WALLPAPER">
             <intent-filter>
                 <action android:name="android.service.wallpaper.WallpaperService" />
@@ -28,6 +29,7 @@
             android:name=".FullscreenActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/app_name"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -37,11 +39,13 @@
         </activity>
         <activity
             android:name=".TransparentFact"
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Translucent" />
         <activity
             android:name=".NoActionBar"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_no_action_bar"
+            android:screenOrientation="portrait"
             android:theme="@style/FullscreenTheme"></activity>
     </application>
 
