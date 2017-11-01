@@ -4,14 +4,17 @@ import android.annotation.SuppressLint;
 import android.app.WallpaperManager;
 import android.content.ComponentName;
 import android.content.Intent;
+import android.graphics.Color;
 import android.hardware.Sensor;
 import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 import android.os.CountDownTimer;
+import android.support.constraint.ConstraintLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
+import android.support.v4.content.ContextCompat;
 import android.support.v4.view.MotionEventCompat;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.ActionBar;
@@ -25,6 +28,7 @@ import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.animation.AccelerateInterpolator;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -62,6 +66,7 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
     private String hoursLeft = "";
     private String minutesLeft = "";
     private String secondsLeft = "";
+    private int backgroundInt = 2;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -386,6 +391,29 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
         currentToGoStat++;
     }
 
-
+    public void changeBackground(View view){
+        backgroundInt++;
+        ConstraintLayout layout =(ConstraintLayout) findViewById(R.id.mainlayout);
+        ImageView mainImage = (ImageView) findViewById(R.id.treeimage);
+        TextView tv = (TextView) findViewById(R.id.fullscreen_content);
+        TextView tv1 = (TextView) findViewById(R.id.secondsText);
+        TextView tv2 = (TextView) findViewById(R.id.hoursMinutesText);
+        switch(backgroundInt%2){
+            case 0:
+                mainImage.setImageDrawable(getDrawable(R.drawable.treeonly));
+                layout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.backgroundcolour));
+                tv.setTextColor(Color.WHITE);
+                tv1.setTextColor(Color.WHITE);
+                tv2.setTextColor(Color.WHITE);
+                break;
+            case 1:
+                mainImage.setImageDrawable(getDrawable(R.drawable.snowman));
+                layout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.backgroundsnowman));
+                tv.setTextColor(Color.BLACK);
+                tv1.setTextColor(Color.BLACK);
+                tv2.setTextColor(Color.BLACK);
+                break;
+        }
+    }
 
 }
