@@ -35,22 +35,23 @@
         android:id="@+id/marginSpacer"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginLeft="52dp"
+        android:layout_marginLeft="72dp"
         app:layout_constraintBottom_toBottomOf="@+id/treeimage"
         app:layout_constraintTop_toTopOf="@+id/treeimage"
         app:layout_constraintLeft_toLeftOf="@+id/treeimage"
         app:layout_constraintRight_toRightOf="@+id/treeimage"
-        android:layout_marginStart="52dp" />
+        android:layout_marginStart="72dp"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintVertical_bias="0.0" />
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:layout_marginStart="62dp"
         android:scaleType="centerCrop"
         android:contentDescription="Fact of the day gift"
         app:layout_constraintDimensionRatio="h,1:1"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toLeftOf="@+id/marginSpacer"
+        app:layout_constraintLeft_toLeftOf="@+id/treeimage"
+        app:layout_constraintRight_toLeftOf="@+id/giftguideline"
         app:srcCompat="@drawable/gift"
         tools:layout_constraintLeft_creator="1"
         app:layout_constraintBottom_toBottomOf="@+id/marginSpacer"
@@ -139,6 +140,13 @@
         android:id="@+id/backgroundguideline"
         app:layout_constraintGuide_percent="0.1"
         android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/giftguideline"
+        app:layout_constraintGuide_percent="0.38"
+        android:orientation="vertical" />
+
     <ImageView
         android:id="@+id/changeBackground"
         android:layout_width="0dp"

@@ -66,7 +66,7 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
     private String hoursLeft = "";
     private String minutesLeft = "";
     private String secondsLeft = "";
-    private int backgroundInt = 2;
+    private int backgroundInt = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -398,7 +398,7 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
         TextView tv = (TextView) findViewById(R.id.fullscreen_content);
         TextView tv1 = (TextView) findViewById(R.id.secondsText);
         TextView tv2 = (TextView) findViewById(R.id.hoursMinutesText);
-        switch(backgroundInt%2){
+        switch(backgroundInt%3){
             case 0:
                 mainImage.setImageDrawable(getDrawable(R.drawable.treeonly));
                 layout.setBackground(ContextCompat.getDrawable(getApplicationContext(), R.drawable.backgroundcolour));
@@ -412,6 +412,9 @@ public class FullscreenActivity extends AppCompatActivity implements SensorEvent
                 tv.setTextColor(Color.BLACK);
                 tv1.setTextColor(Color.BLACK);
                 tv2.setTextColor(Color.BLACK);
+                break;
+            case 2:
+                mainImage.setImageDrawable(getDrawable(R.drawable.santa));
                 break;
         }
     }

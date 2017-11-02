@@ -24,6 +24,7 @@ import android.view.MotionEvent;
 import android.view.SurfaceHolder;
 import android.view.View;
 import android.widget.LinearLayout;
+import android.widget.TextView;
 
 import org.joda.time.DateTime;
 import org.joda.time.Days;
@@ -209,7 +210,8 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
             Canvas c = null;
             try {
                 c = holder.lockCanvas();
-                Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(),R.drawable.christmastree);
+                Bitmap backgroundImage = BitmapFactory.decodeResource(getResources(),R.drawable.backgroundcolour);
+                Bitmap treeImage = BitmapFactory.decodeResource(getResources(),R.drawable.treeonly);
                 //c.drawBitmap(backgroundImage, 0, 0, null);
                 if (c != null) {
                     // draw something
@@ -219,6 +221,8 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
                     background.setDither(true);
 
                     c.drawBitmap(backgroundImage, null, new RectF(0, 0, c.getWidth(), c.getHeight()), null);
+                    c.drawBitmap(treeImage, null, new RectF((float)(c.getWidth()*.05), (float)(c.getHeight()*.15), (float)(c.getWidth()*.95), (float)(c.getHeight()*.6)), null);
+
                     //drawCube(c);
                     Rect bounds = new Rect();
                     LocalDateTime fromDate1 = new LocalDateTime(System.currentTimeMillis());
@@ -254,17 +258,120 @@ public class CountdownWallpaper extends WallpaperService implements SensorEventL
                     displayMetrics = mContext.getResources().getDisplayMetrics();
                     int mScreenWidth = displayMetrics.widthPixels;
                     int mSreenHeight = displayMetrics.heightPixels;
-                    paint.setTextSize(displayMetrics.density*40);
+                    int scaledSize = getResources().getDimensionPixelSize(R.dimen.myFontSize);
+                    paint.setTextSize(scaledSize);
                     paint.setTextAlign(Paint.Align.CENTER);
                     Typeface tf =Typeface.createFromAsset(getAssets(),"fonts/ComingSoon-Regular.ttf");
-                    paint.setTypeface(Typeface.create(tf,Typeface.BOLD));
+                    paint.setTypeface(Typeface.create(tf,Typeface.NORMAL));
                     //paint.setTypeface(Typeface.create("MONOSPACE", Typeface.NORMAL));
                     paint.setColor(Color.WHITE);
                     paint.getTextBounds(daysLeft, 0, daysLeft.length(), bounds);
                     int x = (c.getWidth() / 2);
-                    int y = 4*(c.getHeight())/5;
-
+                    int y = 7*(c.getHeight())/10;
+                    int y1 = 15*(c.getHeight())/20;
+                    int y2 = 63*(c.getHeight())/80;
+                    int scaledSize1 = getResources().getDimensionPixelSize(R.dimen.myFontSize20);
+                    int scaledSize2 = getResources().getDimensionPixelSize(R.dimen.myFontSize15);
                     c.drawText(output, x, y, paint);
+
+
+
+                    int daysDaysLeft = Days.daysBetween(fromDate1, newYear1).getDays();
+                    int daysHoursLeft = Hours.hoursBetween(fromDate1, newYear1).getHours()%24;
+                    int daysMinutesLeft  = Minutes.minutesBetween(fromDate1, newYear1).getMinutes()%60;
+                    int daysSecondsLeft = Seconds.secondsBetween(fromDate1,newYear1).getSeconds()%60;
+
+
+                    daysLeft = daysDaysLeft + " days";
+                    String daysHoursMinutes = "";
+                    String daysSeconds = "";
+                    if(daysHoursLeft==1){
+                        daysHoursMinutes += daysHoursLeft + " hour, ";
+                    }
+                    else{
+                        daysHoursMinutes += daysHoursLeft + " hours, ";
+                    }
+                    if(daysMinutesLeft==1){
+                        daysHoursMinutes += daysMinutesLeft + " minute";
+                    }
+                    else{
+                        daysHoursMinutes += daysMinutesLeft + " minutes";
+                    }
+                    if(daysSecondsLeft ==1){
+                        daysSeconds += daysSecondsLeft + " second";
+                    }
+                    else{
+                        daysSeconds += daysSecondsLeft + " seconds";
+                    }
+
+                    hoursLeft = Hours.hoursBetween(fromDate1, newYear1).getHours() + " hours";
+
+                    minutesLeft = Minutes.minutesBetween(fromDate1, newYear1).getMinutes() + " minutes";
+                    secondsLeft = Seconds.secondsBetween(fromDate1, newYear1).getSeconds() + " seconds";
+                    switch (counterValue){
+                        case 0:
+                            if(daysHoursLeft==1){
+                                daysHoursMinutes = daysHoursLeft + " hour, ";
+                            }
+                            else{
+                                daysHoursMinutes = daysHoursLeft + " hours, ";
+                            }
+                            if(daysMinutesLeft==1){
+                                daysHoursMinutes += daysMinutesLeft + " minute";
+                            }
+                            else{
+                                daysHoursMinutes += daysMinutesLeft + " minutes";
+                            }
+                            if(daysSecondsLeft ==1){
+                                daysSeconds = daysSecondsLeft + " second";
+                            }
+                            else{
+                                daysSeconds = daysSecondsLeft + " seconds";
+                            }
+                            break;
+                        case 1:
+                            if(daysMinutesLeft==1){
+                                daysHoursMinutes = daysMinutesLeft + " minute";
+                            }
+                            else{
+                                daysHoursMinutes = daysMinutesLeft + " minutes";
+                            }
+                            if(daysSecondsLeft ==1){
+                                daysSeconds = daysSecondsLeft + " second";
+                            }
+                            else{
+                                daysSeconds = daysSecondsLeft + " seconds";
+                            }
+                            break;
+                        case 2:
+                            if(daysSecondsLeft ==1){
+                                daysHoursMinutes = daysSecondsLeft + " second";
+                            }
+                            else{
+                                daysHoursMinutes = daysSecondsLeft + " seconds";
+                            }
+                            daysSeconds = "";
+                            break;
+                        case 3:
+                            daysSeconds = "";
+                            daysHoursMinutes = "";
+                            break;
+                        default:
+                            output = daysLeft;
+                            break;
+                    }
+
+
+
+
+
+                    paint.setTextSize(scaledSize1);
+                    c.drawText(daysHoursMinutes, x, y1, paint);
+                    paint.setTextSize(scaledSize2);
+                    c.drawText(daysSeconds, x, y2, paint);
+
+
+
                     if(firstParticles) {
                         for (SnowFlake snowFlake : snowflakes) {
                             snowFlake.draw(c, mSreenHeight);
