@@ -1,60 +1,89 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<LinearLayout
+<android.support.constraint.ConstraintLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/rl"
+    android:id="@+id/mainlayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".TransparentFact"
     android:orientation="vertical"
-    android:weightSum="1"
-    android:onClick="closeActivity"
-    >
+    android:onClick="closeActivity">
+
+    <ImageView
+        android:id="@+id/factOfTheDayImg"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:scaleType="centerCrop"
+        android:contentDescription="Hat"
+        app:layout_constraintDimensionRatio="h,10:13"
+        app:layout_constraintLeft_toLeftOf="@+id/hatleft"
+        app:layout_constraintRight_toRightOf="@+id/hatright"
+        app:layout_constraintTop_toTopOf="@+id/hattop"
+        app:layout_constraintBottom_toBottomOf="@+id/hatbottom"
+        app:srcCompat="@drawable/snowmannobuttons"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/treeguidelinetop" />
     <TextView
+        android:id="@+id/factOfTheDay"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:contentDescription="Fact of the day"
+        app:layout_constraintLeft_toLeftOf="@+id/factleft"
+        app:layout_constraintRight_toRightOf="@+id/factright"
+        app:layout_constraintTop_toTopOf="@+id/facttop"
+        app:layout_constraintBottom_toBottomOf="@+id/hatbottom"
+        android:text="Fact of the Day:\nChristmas is the best"
+        android:textColor="#000000"
+        android:textSize="20dp"
+        tools:layout_constraintLeft_creator="1"
+        app:layout_constraintTop_toBottomOf="@+id/treeguidelinetop" />
+
+    <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:onClick="closeActivity"/>
-
-    <RelativeLayout
-        xmlns:android="http://schemas.android.com/apk/res/android"
-        android:id="@+id/relativelayout"
+        android:id="@+id/hatleft"
+        app:layout_constraintGuide_percent="0.05"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.4"
-        android:layout_marginLeft="20dp"
-        android:layout_marginRight="20dp">
-        <ImageView
-            android:id="@+id/factOfTheDayImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/chrisw"
-            android:layout_weight="0.4"/>
-        <TextView
-            android:id="@+id/factOfTheDay"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBottom="@id/factOfTheDayImg"
-            android:layout_alignLeft="@id/factOfTheDayImg"
-            android:layout_alignRight="@id/factOfTheDayImg"
-            android:layout_alignTop="@id/factOfTheDayImg"
-            android:layout_margin="1dp"
-            android:fontFamily="sans-serif-condensed"
-            android:gravity="center"
-            android:text="Fact of the Day:\nChristmas is the best"
-            android:textColor="#000000"
-            android:textSize="20dp" />
-
-    </RelativeLayout>
-
-
-    <TextView
+        android:id="@+id/hatright"
+        app:layout_constraintGuide_percent="0.95"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_weight="0.3"
-        android:onClick="closeActivity"/>
-</LinearLayout>
+        android:id="@+id/hattop"
+        app:layout_constraintGuide_percent=".05"
+        android:orientation="horizontal" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/hatbottom"
+        app:layout_constraintGuide_percent=".95"
+        android:orientation="horizontal" />
+
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/factleft"
+        app:layout_constraintGuide_percent="0.25"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/factright"
+        app:layout_constraintGuide_percent="0.75"
+        android:orientation="vertical" />
+    <android.support.constraint.Guideline
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/facttop"
+        app:layout_constraintGuide_percent=".6"
+        android:orientation="horizontal" />
+</android.support.constraint.ConstraintLayout>
 
 
 
